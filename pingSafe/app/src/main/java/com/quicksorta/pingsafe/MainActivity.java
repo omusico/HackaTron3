@@ -72,6 +72,8 @@ public class MainActivity extends FragmentActivity implements
     User selfUser;
     Firebase myFirebaseRef;
     Firebase usersRef;
+    Firebase pingList;
+    Firebase pingStats;
     GeoFire geoFire;
 
 
@@ -104,7 +106,10 @@ public class MainActivity extends FragmentActivity implements
         //initializing Firebase Context and instantiating object by referring it to my database
         Firebase.setAndroidContext(this);
         myFirebaseRef = new Firebase("https://dazzling-fire-2743.firebaseio.com/");
+
         geoFire = new GeoFire(myFirebaseRef);
+        pingList = myFirebaseRef.child("pingList");
+        pingStats = myFirebaseRef.child("pingStats");
         usersRef = myFirebaseRef.child("users");
         Firebase newUsersRef = usersRef.push();
         selfUser = new User("Kanye West");
@@ -113,11 +118,11 @@ public class MainActivity extends FragmentActivity implements
         selfUser.setUserNameID(newUsersRef.getKey());
         //function initializes User class and pushes users to database. Also handles location updates
 
-        usersRef.addValueEventListener(new ValueEventListener() {
+        pingList.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Context context = getApplicationContext();
-                Toast.makeText(context, "Ping received !", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -220,6 +225,12 @@ public class MainActivity extends FragmentActivity implements
         longitudeView.setText(String.valueOf(selfUser.getLongitude()));
         latitudeView.setText(String.valueOf(selfUser.getLatitude()));
         selfUser.setPing(true);
+        Firebase newPingStats = pingStats.push();
+
+
+        newPingStats.setValue(selfUser.getUserNameID());
+        pingList.setValue(selfUser.getUserNameID());
+
         usersRef.child(selfUser.getUserNameID()+"/ping").setValue(selfUser.getPing());
 //        sentToStrangers();
     }
