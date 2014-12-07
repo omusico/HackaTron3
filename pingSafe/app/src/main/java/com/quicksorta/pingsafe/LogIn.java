@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.firebase.client.Firebase;
+
 
 public class LogIn extends Activity {
     public final static String EXTRA_MESSAGE = "com.quicksorta.pingsafe.LogIn.MESSAGE";
@@ -20,6 +22,7 @@ public class LogIn extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        Firebase myFirebaseRef = new Firebase("https://dazzling-fire-2743.firebaseio.com/");
     }
 
 

@@ -77,6 +77,7 @@ public class MainActivity extends Activity implements
     TextView latitudeView;
     TextView nameView;
     User selfUser;
+    String[] friendList;
 
     Firebase myFirebaseRef;
     Firebase usersRef;
@@ -132,6 +133,7 @@ public class MainActivity extends Activity implements
         usersRef = myFirebaseRef.child("users");
         Firebase newUsersRef = usersRef.push();
         selfUser = new User(name);
+        friendList = new String[5];
 
 //        usersRef.setValue(selfUser);
         selfUser.setUserNameID(newUsersRef.getKey());
@@ -147,8 +149,9 @@ public class MainActivity extends Activity implements
                 if(data!=null) {
                     Double longitude = (Double) data.get("longitude");
                     Double latitude = (Double) data.get("latitude");
+                    String userID = (String) data.get("name");
                     boolean test = isInRange(longitude, latitude);
-//                System.out.println(Boolean.toString(test));
+//                    System.out.println(userID);
                 }
             }
 
@@ -248,7 +251,15 @@ public class MainActivity extends Activity implements
         }
     }
 
+    public void initializeFriendList(){
+        //From intent
+        String[] friendListIntent = new String[5];
 
+        for (int i = 0; i < 5; i++) {
+            friendListIntent[i] = "";
+            friendList[i] = friendListIntent[i];
+        }
+    }
 
     public void onLocationChanged(Location location){
 //        String msg = "Updated Location: " +
@@ -290,9 +301,10 @@ public class MainActivity extends Activity implements
 
 
         newPingStats.setValue(selfUser);
-        Map<String, Double> coordinates = new HashMap<String,Double>();
+        Map<String, Object> coordinates = new HashMap<String,Object>();
         coordinates.put("longitude", selfUser.getLongitude());
         coordinates.put("latitude", selfUser.getLatitude());
+        coordinates.put("name", selfUser.getUserNameID());
         pingList.setValue(coordinates);
 
         usersRef.child(selfUser.getUserNameID()+"/ping").setValue(selfUser.getPing());
