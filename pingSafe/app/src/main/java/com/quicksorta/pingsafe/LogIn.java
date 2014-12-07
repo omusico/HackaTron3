@@ -17,12 +17,14 @@ import com.firebase.client.Firebase;
 
 public class LogIn extends Activity {
     public final static String EXTRA_MESSAGE = "com.quicksorta.pingsafe.LogIn.MESSAGE";
+    //public final static Firebase userRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        Firebase myFirebaseRef = new Firebase("https://dazzling-fire-2743.firebaseio.com/");
+       // userRef = new Firebase("https://dazzling-fire-2743.firebaseio.com/users");
+
     }
 
 
@@ -51,7 +53,6 @@ public class LogIn extends Activity {
         // Do something in response to button
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
-
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(EXTRA_MESSAGE, message);
         startActivity(intent);
