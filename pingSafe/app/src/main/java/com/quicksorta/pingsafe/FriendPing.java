@@ -1,9 +1,11 @@
 package com.quicksorta.pingsafe;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class FriendPing extends Activity {
@@ -12,6 +14,15 @@ public class FriendPing extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_ping);
+    }
+
+    public void helpConfirmed(View view){
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+    }
+    public void helpUnconfirmed(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
 

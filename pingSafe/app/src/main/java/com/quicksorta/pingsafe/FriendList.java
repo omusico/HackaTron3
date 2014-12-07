@@ -1,9 +1,11 @@
 package com.quicksorta.pingsafe;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class FriendList extends Activity {
@@ -13,7 +15,10 @@ public class FriendList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
     }
-
+    public void submitInformation(View view){
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
