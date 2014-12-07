@@ -38,6 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.lang.Math.*;
+import java.util.Vector;
 
 
 public class MainActivity extends Activity implements
@@ -78,6 +79,7 @@ public class MainActivity extends Activity implements
     TextView nameView;
     User selfUser;
     String[] friendList;
+    Vector userList;
 
     Firebase myFirebaseRef;
     Firebase usersRef;
@@ -149,12 +151,19 @@ public class MainActivity extends Activity implements
                 if(data!=null) {
                     Double longitude = (Double) data.get("longitude");
                     Double latitude = (Double) data.get("latitude");
-                    String userID = (String) data.get("name");
+                    String name = (String) data.get("name");
+
+                    for (int i = 0; i < 5; i++) {
+                        if (name.equals("michael")) {
+                            isFriend(name);
+                            return;
+                        }
+                    }
+
                     boolean test = isInRange(longitude, latitude);
 //                    System.out.println(userID);
                 }
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
@@ -164,7 +173,12 @@ public class MainActivity extends Activity implements
 
     }
 
+
+    void isFriend(String name) {
+        Toast.makeText(this, "We mathed with " + name, Toast.LENGTH_LONG).show();
+    }
      public boolean isInRange(Double longitude, Double latitude){
+            int radius = 8;
 //         geoFire.getLocation(dataSnapshot.toString(), new LocationCallback() {
 //             @Override
 //             public void onLocationResult(String key, GeoLocation location) {
@@ -201,7 +215,12 @@ public class MainActivity extends Activity implements
 //        //Toast.makeText(this, data.get("longitude"), Toast.LENGTH_LONG).show();
         double dist = Math.sqrt(Math.pow(latitude - selfUser.getLatitude(), 2) + Math.pow(longitude - selfUser.getLongitude(), 2));
         dist*=(1000000/9);
-        Toast.makeText(this, Double.toString(dist), Toast.LENGTH_SHORT).show();
+        if (dist< radius) {
+            Toast.makeText(this, "Stranger pinged from: " + Double.toString(dist), Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(this, "DOOD is too far away... " + Double.toString(dist), Toast.LENGTH_SHORT).show();
+        }
         return false;
 
 
@@ -214,6 +233,8 @@ public class MainActivity extends Activity implements
         private double longitude;
         private String userNameID;
         private boolean ping;
+        private String Dylan = "Dylan";
+        private String[] friendsList = new String[5];
 
         public User() {}
 
@@ -249,15 +270,15 @@ public class MainActivity extends Activity implements
         public String getFullName() {
             return fullName;
         }
-    }
 
-    public void initializeFriendList(){
-        //From intent
-        String[] friendListIntent = new String[5];
-
-        for (int i = 0; i < 5; i++) {
-            friendListIntent[i] = "";
-            friendList[i] = friendListIntent[i];
+        public String[] getFriendsList() {
+            return friendsList;
+        }
+        public String getDylan() { return Dylan; };
+        public void setFriendsList(String[] friends) {
+            for (int i = 0; i < 5; i++){
+                friendsList[i] = "Dylan";
+            }
         }
     }
 
@@ -270,7 +291,6 @@ public class MainActivity extends Activity implements
         selfUser.setLongitude(location.getLongitude());
         usersRef.child(selfUser.getUserNameID()+"/latitude").setValue(selfUser.getLatitude());
         usersRef.child(selfUser.getUserNameID()+"/longitude").setValue(selfUser.getLongitude());
-//        geoFire.setLocation(selfUser.getUserNameID(), new GeoLocation(selfUser.getLatitude(), selfUser.getLongitude()));
 
         Toast.makeText(this, "Updated latitude: " + Double.toString(selfUser.getLatitude()), Toast.LENGTH_SHORT).show();
 //        sentToStrangers();
@@ -304,7 +324,7 @@ public class MainActivity extends Activity implements
         Map<String, Object> coordinates = new HashMap<String,Object>();
         coordinates.put("longitude", selfUser.getLongitude());
         coordinates.put("latitude", selfUser.getLatitude());
-        coordinates.put("name", selfUser.getUserNameID());
+        coordinates.put("name", selfUser.getFullName());
         pingList.setValue(coordinates);
 
         usersRef.child(selfUser.getUserNameID()+"/ping").setValue(selfUser.getPing());
