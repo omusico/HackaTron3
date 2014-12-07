@@ -24,16 +24,20 @@ import android.widget.Toast;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.GenericTypeIndicator;
 import com.firebase.client.ValueEventListener;
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
+import com.firebase.geofire.LocationCallback;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.lang.Math.*;
 
 
 public class MainActivity extends Activity implements
@@ -64,6 +68,8 @@ public class MainActivity extends Activity implements
     private static final long FASTEST_INTERVAL =
             MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS;
 
+    private static double pingerLongitude, pingerLatitude;
+
     LocationClient mLocationClient;
     boolean mUpdatesRequested;
     boolean sentToStrangers = false;
@@ -71,11 +77,11 @@ public class MainActivity extends Activity implements
     TextView latitudeView;
     TextView nameView;
     User selfUser;
+
     Firebase myFirebaseRef;
     Firebase usersRef;
     Firebase pingList;
     Firebase pingStats;
-    GeoFire geoFire;
 
 
     // Define an object that holds accuracy and frequency parameters
@@ -120,14 +126,14 @@ public class MainActivity extends Activity implements
         Firebase.setAndroidContext(this);
         myFirebaseRef = new Firebase("https://dazzling-fire-2743.firebaseio.com/");
 
-        geoFire = new GeoFire(myFirebaseRef);
+
         pingList = myFirebaseRef.child("pingList");
         pingStats = myFirebaseRef.child("pingStats");
         usersRef = myFirebaseRef.child("users");
         Firebase newUsersRef = usersRef.push();
-        selfUser = new User("Kanye West");
+        selfUser = new User(name);
 
-        usersRef.setValue(selfUser);
+//        usersRef.setValue(selfUser);
         selfUser.setUserNameID(newUsersRef.getKey());
         //function initializes User class and pushes users to database. Also handles location updates
 
@@ -135,7 +141,15 @@ public class MainActivity extends Activity implements
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Context context = getApplicationContext();
-                Toast.makeText(context, dataSnapshot.toString(), Toast.LENGTH_SHORT).show();
+                Map<String,Object> data = (Map<String,Object>) dataSnapshot.getValue();
+
+//                Toast.makeText(context, "Longitude toast: " + data.get("longitude").toString(), Toast.LENGTH_SHORT).show();
+                if(data!=null) {
+                    Double longitude = (Double) data.get("longitude");
+                    Double latitude = (Double) data.get("latitude");
+                    boolean test = isInRange(longitude, latitude);
+//                System.out.println(Boolean.toString(test));
+                }
             }
 
             @Override
@@ -147,6 +161,48 @@ public class MainActivity extends Activity implements
 
     }
 
+     public boolean isInRange(Double longitude, Double latitude){
+//         geoFire.getLocation(dataSnapshot.toString(), new LocationCallback() {
+//             @Override
+//             public void onLocationResult(String key, GeoLocation location) {
+//                 if (location != null) {
+////                     System.out.println(String.format("The location for key %s is [%f,%f]", key, location.latitude, location.longitude));
+//                     pingerLatitude = location.latitude;
+//                     pingerLongitude = location.longitude;
+//                 } else {
+//                     System.out.println(String.format("There is no location for key %s in GeoFire", key));
+//                 }
+//             }
+//
+//             @Override
+//             public void onCancelled(FirebaseError firebaseError) {
+//                 System.err.println("There was an error getting the GeoFire location: " + firebaseError);
+//             }
+
+//        parse dataSnapshot, get other longitude and latitude
+//        pingerLatitude =
+//        pingerLongitude =
+//        Map<String,String> value = (Map<String,String>)dataSnapshot.getValue();
+//         GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
+//         List<String> messages = dataSnapshot.getValue(t);
+//         if( messages == null ) {
+//             System.out.println("No messages");
+//         }
+//         else {
+//             System.out.println("The first message is: " + messages.get(0) );
+//         }
+
+//
+
+//         System.out.println("Longitude: " + data.get("longitude").toString());
+//        //Toast.makeText(this, data.get("longitude"), Toast.LENGTH_LONG).show();
+        double dist = Math.sqrt(Math.pow(latitude - selfUser.getLatitude(), 2) + Math.pow(longitude - selfUser.getLongitude(), 2));
+        dist*=(1000000/9);
+        Toast.makeText(this, Double.toString(dist), Toast.LENGTH_SHORT).show();
+        return false;
+
+
+     }
     //User class
     public class User {
 
@@ -192,14 +248,6 @@ public class MainActivity extends Activity implements
         }
     }
 
-    //Initializes five users and pushes to database
-    public void createUsers(Firebase myFirebaseRef){
-        User simon_bloch = new User("Simon Bloch");
-        Firebase usersRef = myFirebaseRef.child("users");
-        Map<String, User> users = new HashMap<String, User>();
-        users.put("User2", simon_bloch);
-        usersRef.setValue(users);
-    }
 
 
     public void onLocationChanged(Location location){
@@ -209,9 +257,9 @@ public class MainActivity extends Activity implements
 //        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         selfUser.setLatitude(location.getLatitude());
         selfUser.setLongitude(location.getLongitude());
-//        usersRef.child(selfUser.getUserNameID()+"/latitude").setValue(selfUser.getLatitude());
-//        usersRef.child(selfUser.getUserNameID()+"/longitude").setValue(selfUser.getLongitude());
-        geoFire.setLocation(selfUser.getUserNameID(), new GeoLocation(selfUser.getLatitude(), selfUser.getLongitude()));
+        usersRef.child(selfUser.getUserNameID()+"/latitude").setValue(selfUser.getLatitude());
+        usersRef.child(selfUser.getUserNameID()+"/longitude").setValue(selfUser.getLongitude());
+//        geoFire.setLocation(selfUser.getUserNameID(), new GeoLocation(selfUser.getLatitude(), selfUser.getLongitude()));
 
         Toast.makeText(this, "Updated latitude: " + Double.toString(selfUser.getLatitude()), Toast.LENGTH_SHORT).show();
 //        sentToStrangers();
@@ -234,17 +282,21 @@ public class MainActivity extends Activity implements
 ////            mLocationClient.connect();
 //            mUpdatesRequested = true;
 //        }
-
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
         longitudeView.setText(String.valueOf(selfUser.getLongitude()));
         latitudeView.setText(String.valueOf(selfUser.getLatitude()));
-        selfUser.setPing(true);
         Firebase newPingStats = pingStats.push();
 
 
-        newPingStats.setValue(selfUser.getUserNameID());
-        pingList.setValue(selfUser.getUserNameID());
+        newPingStats.setValue(selfUser);
+        Map<String, Double> coordinates = new HashMap<String,Double>();
+        coordinates.put("longitude", selfUser.getLongitude());
+        coordinates.put("latitude", selfUser.getLatitude());
+        pingList.setValue(coordinates);
 
         usersRef.child(selfUser.getUserNameID()+"/ping").setValue(selfUser.getPing());
+
 //        sentToStrangers();
     }
 
