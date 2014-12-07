@@ -2,8 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.quicksorta.pingsafe" >
 
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="20" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <android:uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -20,11 +32,28 @@
         </activity>
         <activity
             android:name="com.quicksorta.pingsafe.LogIn"
-            android:label="@string/title_activity_log_in" >
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.quicksorta.pingsafe.PingedPage"
+            android:label="@string/title_activity_pinged_page" >
+        </activity>
+        <activity
+            android:name="com.quicksorta.pingsafe.StrangerPing"
+            android:label="@string/title_activity_stranger_ping" >
+        </activity>
+        <activity
+            android:name="com.quicksorta.pingsafe.FriendList"
+            android:label="@string/title_activity_friend_list" >
+        </activity>
+        <activity
+            android:name="com.quicksorta.pingsafe.FriendPing"
+            android:label="@string/title_activity_friend_ping" >
         </activity>
     </application>
 

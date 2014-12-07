@@ -1,17 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
-    <EditText android:id="@+id/edit_message"
-        android:layout_weight="1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/edit_message" />
-    <Button
+    android:orientation="horizontal"
+    android:id="@+id/table_layout"
+    android:background="#883080d1">
+
+    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_send"
-        android:onClick="sendMessage" />
-</LinearLayout>
+        android:baselineAligned="false">
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="400px"
+            android:layout_column="34" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal">
+
+        <EditText android:id="@+id/edit_message"
+            android:layout_weight="0"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_message"
+            android:layout_column="30"
+            android:autoText="false"
+            android:background="#ffffff"
+            android:gravity="center_vertical" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_column="30" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_send"
+            android:onClick="sendMessage"
+            android:layout_column="1"
+            android:background="#ff348cae"
+            android:textColor="#FFFFFF"
+            android:id="@+id/LogIn" />
+    </TableRow>
+
+</TableLayout>

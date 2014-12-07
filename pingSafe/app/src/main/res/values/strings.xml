@@ -8,8 +8,16 @@
     <string name="latitude">Latitude</string>
     <string name="title_activity_main_activity2">MainActivity2</string>
     <string name="title_activity_log_in">LogIn</string>
-    <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    <string name="edit_message">Enter your username</string>
+    <string name="button_send">Log In</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_pinged_page">PingedPage</string>
+    <string name="safe_space_confirmed">You have x people nearby, supporting you, committed to being your allies.</string>
+    <string name="status_waiting">Waiting...</string>
+    <string name="status_positive">On their way</string>
+    <string name="status_negative">Unavailable</string>
+    <string name="safe_space_confirm">\nSomeone in your radius feels unsafe in this environment. Be aware of your behavior and the behavior of others around you. Click below to commit to making this a Safe Space for all.</string>
+    <string name="title_activity_friend_list">FriendList</string>
+    <string name="title_activity_friend_ping">FriendPing</string>
 
 </resources>

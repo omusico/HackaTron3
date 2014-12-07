@@ -5,7 +5,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation = "vertical"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".MainActivity$PlaceholderFragment"
+    android:id="@+id/"
+    android:background="#883080d1"
+    android:weightSum="1">
+
 
     <Button
         android:layout_width="wrap_content"
@@ -16,51 +20,17 @@
         android:layout_centerHorizontal="true"
         android:singleLine="true"
         android:onClick="sendLocation"
+        style="@android:style/Widget.Holo.Light.GridView"
         android:layout_gravity="center_horizontal" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/latitude"
-        android:id="@+id/textView2"
-        android:layout_toStartOf="@+id/button"
-        android:layout_toLeftOf="@+id/button"
-        android:layout_marginTop="26dp"
-        android:layout_below="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/latitude"
-        android:layout_below="@+id/textView2"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/longitude"
-        android:id="@+id/textView3"
-        android:layout_below="@+id/textView2"
-        android:layout_toLeftOf="@+id/button"
-        android:layout_toStartOf="@+id/button"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center_horizontal" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/longitude"
-        android:layout_toEndOf="@+id/textView3"
-        android:layout_toRightOf="@+id/button"
-        android:layout_below="@+id/textView3"
-        android:layout_alignLeft="@+id/latitude"
-        android:layout_alignStart="@+id/latitude"
-        android:layout_gravity="center_horizontal" />
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="102dp"
+        android:layout_height="71dp"
+        android:text="FRIENDS"
+        android:id="@+id/button2"
+        android:onClick="sendToFriends"
+        android:layout_gravity="bottom|right"
+        android:layout_marginTop="370dp" />
 
 </LinearLayout>
