@@ -45,7 +45,8 @@
         </activity>
         <activity
             android:name="com.quicksorta.pingsafe.StrangerPing"
-            android:label="@string/title_activity_stranger_ping" >
+            android:label="@string/title_activity_stranger_ping"
+            android:parentActivityName="com.quicksorta.pingsafe.MainActivity">
         </activity>
         <activity
             android:name="com.quicksorta.pingsafe.FriendList"
@@ -54,6 +55,14 @@
         <activity
             android:name="com.quicksorta.pingsafe.FriendPing"
             android:label="@string/title_activity_friend_ping" >
+        </activity>
+        <activity
+            android:name="com.quicksorta.pingsafe.TestFromMain"
+            android:label="@string/title_activity_test_from_main"
+            android:parentActivityName="com.quicksorta.pingsafe.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="MainActivity" />
         </activity>
     </application>
 

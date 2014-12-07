@@ -216,6 +216,8 @@ public class MainActivity extends Activity implements
         double dist = Math.sqrt(Math.pow(latitude - selfUser.getLatitude(), 2) + Math.pow(longitude - selfUser.getLongitude(), 2));
         dist*=(1000000/9);
         if (dist< radius) {
+            Intent intent = new Intent(this, StrangerPing.class);
+            startActivity(intent);
             Toast.makeText(this, "Stranger pinged from: " + Double.toString(dist), Toast.LENGTH_SHORT).show();
         }
         else {

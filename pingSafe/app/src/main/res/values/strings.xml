@@ -16,8 +16,10 @@
     <string name="status_waiting">Waiting...</string>
     <string name="status_positive">On their way</string>
     <string name="status_negative">Unavailable</string>
-    <string name="safe_space_confirm">\nSomeone in your radius feels unsafe in this environment. Be aware of your behavior and the behavior of others around you. Click below to commit to making this a Safe Space for all.</string>
+    <string name="safe_space_confirm">\nSomeone in your environment feels unsafe. Be aware of your behavior and the behavior of others around you. Let this person know you're their ally:</string>
     <string name="title_activity_friend_list">FriendList</string>
     <string name="title_activity_friend_ping">FriendPing</string>
+    <string name="title_activity_test_from_main">TestFromMain</string>
+    <string name ="title_activity_stranger_ping">StrangerPing</string>
 
 </resources>
