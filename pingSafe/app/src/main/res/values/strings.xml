@@ -7,5 +7,9 @@
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
     <string name="title_activity_main_activity2">MainActivity2</string>
+    <string name="title_activity_log_in">LogIn</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

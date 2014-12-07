@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainActivity extends FragmentActivity implements
+public class MainActivity extends Activity implements
 
     GooglePlayServicesClient.ConnectionCallbacks,
     GooglePlayServicesClient.OnConnectionFailedListener,
@@ -69,6 +69,7 @@ public class MainActivity extends FragmentActivity implements
     boolean sentToStrangers = false;
     TextView longitudeView;
     TextView latitudeView;
+    TextView nameView;
     User selfUser;
     Firebase myFirebaseRef;
     Firebase usersRef;
@@ -83,6 +84,18 @@ public class MainActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get the message from the intent
+        Intent intent = getIntent();
+        String name = intent.getStringExtra(LogIn.EXTRA_MESSAGE);
+        // Get the message from the intent
+        // Create the text view
+        TextView textView = new TextView(this);
+        textView.setTextSize(40);
+        textView.setText(name);
+
+        // Set the text view as the activity layout
+        setContentView(textView);
+
 
         setContentView(R.layout.fragment_main);
         // Create the LocationRequest object
@@ -352,7 +365,7 @@ public class MainActivity extends FragmentActivity implements
                 // Set the dialog in the DialogFragment
                 errorFragment.setDialog(errorDialog);
                 // Show the error dialog in the DialogFragment
-                errorFragment.show(getSupportFragmentManager(), "Location Updates");
+//                errorFragment.show(getSupportFragmentManager(), "Location Updates");
             }
         }
         return false;
@@ -425,6 +438,18 @@ public class MainActivity extends FragmentActivity implements
 
 
 
+        }
+    }
+    public static class PlaceholderFragment extends Fragment {
+
+        public PlaceholderFragment() { }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main,
+                    container, false);
+            return rootView;
         }
     }
 }
